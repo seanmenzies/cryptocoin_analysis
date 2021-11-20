@@ -24,7 +24,7 @@ def get_coin_ids():
     return coins_id
 
 
-# get market data for last 10 days for all coins
+# get market data for last x days for all coins
 def get_ten_day_records(coin_ids, days=10):
     all_coin_records = {}
     for id in tqdm(range(len(coin_ids))):
@@ -94,7 +94,7 @@ def get_price(coin_ids):
                 continue
         with open(path, 'a') as coin_data:
             coin_data.write(f'\n{now.strftime("%d/%m/%Y, %H%M%S")}, {price[coin_id]["usd"]}')
-            stdout.write(f'\rRunning for {convert_secs(start)}')
+            stdout.write(f'\rRunning for {convert_secs(start)}')  # keep one-line progress printed to console
             stdout.flush()
             enum = enum + 1 if enum < 4 else 0
             sleep(1.2)
@@ -115,6 +115,3 @@ def plot_data(fname):
     x_data = [x for x in range(len(y_data))]
     plt.plot(x_data, y_data)
     plt.show()
-
-
-get_price(['bitcoin', 'ethereum', 'solana', 'ripple', 'dogecoin'])
